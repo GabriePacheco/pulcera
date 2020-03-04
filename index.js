@@ -1,5 +1,6 @@
 $("#indicador").height($(window).height()/2);
 $("#buscar").click(bluetooth);
+$("car").click(buscarCaracteristicas);
 var cargando = `<div class="preloader-wrapper small active">
     <div class="spinner-layer spinner-red-only">
       <div class="circle-clipper left">
@@ -14,7 +15,7 @@ var cargando = `<div class="preloader-wrapper small active">
 
 
 
-async function  bluetooth(evento){
+async function bluetooth(evento){
   $("#estado").html(cargando);
   if (! navigator.bluetooth){
     $("#estado").html("Tu dispositvo no es compatible con bluetooth..");
@@ -32,9 +33,9 @@ async function  bluetooth(evento){
         $("#dispositivo").html(``);
         $("#dispositivo").append(`<p>ID: ${device.id} </p>`);
         $("#dispositivo").append(`<p>Nombre: ${device.name} </p>`);
-       
+        $("#car").removeClass(`hide`);
                 
-        let server = await device.gatt.connect();
+        const server = await device.gatt.connect();
         if (server){
             $("#estado").html("Conectado");
 
@@ -73,7 +74,11 @@ function handleCharacteristicValueChanged(event){
   let g =  value.getUint8(1)
   let b =  value.getUint8(2)
   let n = value.getUint8(3)
-  ;
   $("#estado").html("<p> <span>"+ r + "</span> <span>"+ g + "</span>  <span>"+ b + "</span> <span>"+ n + "</span></p>");
 
+}
+
+function buscarCaracteristicas (e){
+ 
+  $("#dispositvo").append("<p>la concha d tu hermana </p>");
 }
